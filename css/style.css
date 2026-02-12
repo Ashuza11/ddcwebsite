@@ -1,0 +1,467 @@
+/* =========================================
+   DDC RDC — Custom Styles v2
+   Dynamique Debout Congolais
+   Cross-browser normalized, mobile-first
+   ========================================= */
+
+/* ---- CSS Reset / Normalization ---- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* ---- Selection ---- */
+::selection {
+    background: rgba(0, 51, 160, 0.4);
+    color: #D4A017;
+}
+
+/* ---- Scrollbar (Chromium only, degrades gracefully) ---- */
+::-webkit-scrollbar { width: 0.5rem; }
+::-webkit-scrollbar-track { background: #0d0d0d; }
+::-webkit-scrollbar-thumb { background: #0033A0; border-radius: 0.25rem; }
+::-webkit-scrollbar-thumb:hover { background: #D4A017; }
+
+/* ---- Congolese Geometric Patterns ---- */
+
+.congolese-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4A017' fill-opacity='1'%3E%3Cpath d='M30 0L60 30L30 60L0 30z M30 8L52 30L30 52L8 30z'/%3E%3Cpath d='M30 15L45 30L30 45L15 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-size: 3.75rem 3.75rem;
+}
+
+.congolese-pattern-2 {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%230033A0' stroke-width='1.5'%3E%3Cpath d='M0 20 L20 0 L40 20 L60 0 L80 20'/%3E%3Cpath d='M0 40 L20 20 L40 40 L60 20 L80 40'/%3E%3Cpath d='M0 60 L20 40 L40 60 L60 40 L80 60'/%3E%3Cpath d='M0 80 L20 60 L40 80 L60 60 L80 80'/%3E%3Crect x='15' y='15' width='10' height='10' fill='%23D4A017' fill-opacity='0.3'/%3E%3Crect x='55' y='15' width='10' height='10' fill='%23D4A017' fill-opacity='0.3'/%3E%3Crect x='35' y='35' width='10' height='10' fill='%23D4A017' fill-opacity='0.3'/%3E%3Crect x='15' y='55' width='10' height='10' fill='%23D4A017' fill-opacity='0.3'/%3E%3Crect x='55' y='55' width='10' height='10' fill='%23D4A017' fill-opacity='0.3'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 5rem 5rem;
+}
+
+/* Stronger Kuba-inspired border pattern for section dividers */
+.congolese-border {
+    background-image: url("data:image/svg+xml,%3Csvg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 6 L6 0 L12 6 L6 12Z M14 6 L20 0 L26 6 L20 12Z M28 6 L34 0 L40 6 L34 12Z' fill='%23D4A017' fill-opacity='0.6'/%3E%3C/svg%3E");
+    background-size: 2.5rem 0.75rem;
+    background-repeat: repeat-x;
+    height: 0.75rem;
+}
+
+/* ---- Navigation ---- */
+#navbar {
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+#navbar.scrolled {
+    background: rgba(13, 13, 13, 0.95);
+    -webkit-backdrop-filter: blur(1.25rem);
+    backdrop-filter: blur(1.25rem);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0.25rem 1.875rem rgba(0, 0, 0, 0.3);
+}
+
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0.125rem;
+    background: linear-gradient(to right, #0033A0, #D4A017);
+    -webkit-transition: width 0.3s ease;
+    transition: width 0.3s ease;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    border-radius: 0.0625rem;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 60%;
+}
+
+.nav-link.active {
+    color: #D4A017;
+}
+
+/* ---- Mobile Menu — SOLID BACKGROUND, NO TRANSPARENCY ---- */
+#mobile-menu {
+    background: #0d0d0d; /* Solid dark, no transparency */
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+#mobile-menu.open {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+
+#hamburger.open span:nth-child(1) {
+    -webkit-transform: translateY(0.375rem) rotate(45deg);
+    transform: translateY(0.375rem) rotate(45deg);
+}
+
+#hamburger.open span:nth-child(2) {
+    opacity: 0;
+    -webkit-transform: translateX(-0.625rem);
+    transform: translateX(-0.625rem);
+}
+
+#hamburger.open span:nth-child(3) {
+    width: 1.5rem;
+    -webkit-transform: translateY(-0.375rem) rotate(-45deg);
+    transform: translateY(-0.375rem) rotate(-45deg);
+}
+
+/* ---- Hero Slideshow ---- */
+.hero-slideshow {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-transition: opacity 1.5s ease, -webkit-transform 8s ease-out;
+    transition: opacity 1.5s ease, transform 8s ease-out;
+    will-change: opacity, transform;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+/* Dark overlay over slideshow for text readability */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.7) 0%,
+        rgba(0, 16, 64, 0.75) 40%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: 1;
+}
+
+/* Slideshow progress dots */
+.slide-dots {
+    display: flex;
+    gap: 0.5rem;
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 5;
+}
+
+.slide-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.slide-dot.active {
+    background: #D4A017;
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+}
+
+/* Hero geometric floating shapes */
+.hero-shape {
+    -webkit-animation: heroFloat 8s ease-in-out infinite;
+    animation: heroFloat 8s ease-in-out infinite;
+    will-change: transform;
+}
+
+.hero-shape:nth-child(2) {
+    -webkit-animation-delay: -3s;
+    animation-delay: -3s;
+    -webkit-animation-duration: 10s;
+    animation-duration: 10s;
+}
+
+.hero-shape:nth-child(3) {
+    -webkit-animation-delay: -5s;
+    animation-delay: -5s;
+    -webkit-animation-duration: 12s;
+    animation-duration: 12s;
+}
+
+@-webkit-keyframes heroFloat {
+    0%, 100% { -webkit-transform: translate(0, 0); opacity: 0.3; }
+    50% { -webkit-transform: translate(-1.25rem, -2.5rem); opacity: 0.6; }
+}
+@keyframes heroFloat {
+    0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+    50% { transform: translate(-1.25rem, -2.5rem); opacity: 0.6; }
+}
+
+/* Hero text word-reveal animation */
+.word-reveal {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.word-reveal span {
+    display: inline-block;
+    -webkit-transform: translateY(120%);
+    transform: translateY(120%);
+    will-change: transform;
+}
+
+/* ---- Stat counter glow ---- */
+.stat-value {
+    text-shadow: 0 0 2.5rem rgba(212, 160, 23, 0.3);
+}
+
+/* ---- Section background with real photo ---- */
+.section-bg-photo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.section-bg-photo img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    opacity: 0.08;
+    -webkit-filter: grayscale(0.5);
+    filter: grayscale(0.5);
+}
+
+/* ---- Program Cards ---- */
+.program-card {
+    -webkit-transition: -webkit-transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s ease;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s ease;
+}
+
+.program-card:hover {
+    -webkit-transform: translateY(-0.5rem);
+    transform: translateY(-0.5rem);
+    box-shadow: 0 1.25rem 3.75rem rgba(0, 51, 160, 0.15);
+}
+
+/* ---- Event Cards ---- */
+.event-card {
+    -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    cursor: pointer;
+}
+
+.event-card:hover {
+    -webkit-transform: translateY(-0.25rem);
+    transform: translateY(-0.25rem);
+}
+
+.event-card.hidden-filter {
+    display: none;
+}
+
+/* ---- Event Filter ---- */
+.event-filter.active {
+    background: rgba(212, 160, 23, 0.15);
+    border-color: rgba(212, 160, 23, 0.4);
+    color: #D4A017;
+}
+
+/* ---- Gallery Scroll ---- */
+.gallery-scroll {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+@-webkit-keyframes scrollGallery {
+    0% { -webkit-transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); }
+}
+@keyframes scrollGallery {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+    -webkit-animation: scrollGallery 60s linear infinite;
+    animation: scrollGallery 60s linear infinite;
+}
+
+.gallery-scroll:hover .animate-scroll {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+/* ---- Form Styles ---- */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 0 0.1875rem rgba(212, 160, 23, 0.15);
+}
+
+.form-group select option {
+    background: #1a1a1a;
+    color: white;
+}
+
+/* ---- Button micro-interaction ---- */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-transition: -webkit-transform 0.6s ease;
+    transition: transform 0.6s ease;
+}
+
+.btn-primary:hover::before {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+/* ---- Reveal Animations (CSS-driven, GSAP-enhanced) ---- */
+.reveal-up,
+.reveal-left,
+.reveal-right,
+.reveal-scale {
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.reveal-up {
+    -webkit-transform: translateY(3.75rem);
+    transform: translateY(3.75rem);
+}
+
+.reveal-left {
+    -webkit-transform: translateX(-3.75rem);
+    transform: translateX(-3.75rem);
+}
+
+.reveal-right {
+    -webkit-transform: translateX(3.75rem);
+    transform: translateX(3.75rem);
+}
+
+.reveal-scale {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+}
+
+.reveal-up.revealed,
+.reveal-left.revealed,
+.reveal-right.revealed,
+.reveal-scale.revealed {
+    opacity: 1;
+    -webkit-transform: translate(0, 0) scale(1);
+    transform: translate(0, 0) scale(1);
+    -webkit-transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        -webkit-transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ---- Lightbox ---- */
+#lightbox.active {
+    display: flex;
+}
+
+/* ---- Loader ---- */
+#loader {
+    -webkit-transition: opacity 0.5s ease, visibility 0.5s ease;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ---- Responsive (rem-based) ---- */
+@media (max-width: 40rem) { /* 640px */
+    .gallery-img {
+        height: 10rem;
+    }
+
+    .program-card:hover {
+        -webkit-transform: translateY(-0.25rem);
+        transform: translateY(-0.25rem);
+    }
+}
+
+@media (max-width: 48rem) { /* 768px */
+    #hero-stats {
+        gap: 1rem;
+    }
+}
+
+/* ---- Gold Divider ---- */
+.gold-divider {
+    height: 0.125rem;
+    background: linear-gradient(to right, transparent, #D4A017, transparent);
+}
+
+/* ---- Print Styles ---- */
+@media print {
+    #navbar, #loader, #lightbox, .gallery-scroll, .hero-slideshow {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    section {
+        page-break-inside: avoid;
+    }
+}

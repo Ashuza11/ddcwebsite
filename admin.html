@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>DDC RDC — Administration</title>
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        royal: {
+                            500: '#0033A0',
+                            600: '#002d8f',
+                            700: '#00237a',
+                            800: '#001a66',
+                            900: '#001040',
+                        },
+                        gold: {
+                            400: '#edc438',
+                            500: '#D4A017',
+                        },
+                        dark: {
+                            700: '#222222',
+                            800: '#1a1a1a',
+                            900: '#0d0d0d',
+                        }
+                    },
+                    fontFamily: {
+                        body: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .sidebar-link.active { background: rgba(0, 51, 160, 0.2); border-right: 3px solid #D4A017; color: #D4A017; }
+        .toast { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
+</head>
+
+<body class="bg-dark-900 text-white font-body min-h-screen">
+
+    <!-- ========== LOGIN SCREEN ========== -->
+    <div id="login-screen" class="fixed inset-0 z-50 bg-dark-900 flex items-center justify-center p-4">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-8">
+                <img src="img/DDClogo.png" alt="DDC RDC" class="w-20 h-20 mx-auto mb-4 object-contain">
+                <h1 class="text-2xl font-bold text-white">Administration DDC</h1>
+                <p class="text-white/40 text-sm mt-2">Connectez-vous pour gérer le contenu</p>
+            </div>
+
+            <form id="login-form" class="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8">
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-white/60 mb-2">Identifiant</label>
+                    <input type="text" id="login-username" required autocomplete="username"
+                        class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-royal-500/50 focus:ring-1 focus:ring-royal-500/25 transition-all"
+                        placeholder="admin">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-white/60 mb-2">Mot de passe</label>
+                    <input type="password" id="login-password" required autocomplete="current-password"
+                        class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-royal-500/50 focus:ring-1 focus:ring-royal-500/25 transition-all"
+                        placeholder="••••••••">
+                </div>
+                <div id="login-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm text-center"></div>
+                <button type="submit"
+                    class="w-full py-3 bg-royal-500 text-white font-semibold rounded-xl hover:bg-royal-600 transition-colors">
+                    Se connecter
+                </button>
+            </form>
+
+            <p class="text-center text-white/20 text-xs mt-6">
+                <a href="index.html" class="hover:text-gold-400 transition-colors">&larr; Retour au site</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ========== ADMIN DASHBOARD ========== -->
+    <div id="admin-dashboard" class="hidden min-h-screen flex">
+
+        <!-- Sidebar -->
+        <aside class="fixed left-0 top-0 bottom-0 w-64 bg-dark-800 border-r border-white/[0.06] flex flex-col z-40">
+            <div class="p-6 border-b border-white/[0.06]">
+                <div class="flex items-center gap-3">
+                    <img src="img/DDClogo.png" alt="DDC" class="w-10 h-10 object-contain">
+                    <div>
+                        <div class="text-sm font-bold text-white">DDC Admin</div>
+                        <div class="text-[10px] text-gold-400 tracking-wider">PANEL DE GESTION</div>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex-1 py-4">
+                <a href="#" data-section="news" class="sidebar-link active flex items-center gap-3 px-6 py-3 text-sm text-white/60 hover:text-white hover:bg-white/[0.03] transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                    Actualités
+                </a>
+                <a href="#" data-section="events" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-white/60 hover:text-white hover:bg-white/[0.03] transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    Événements
+                </a>
+                <a href="#" data-section="publications" class="sidebar-link flex items-center gap-3 px-6 py-3 text-sm text-white/60 hover:text-white hover:bg-white/[0.03] transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    Publications
+                </a>
+            </nav>
+
+            <div class="p-4 border-t border-white/[0.06]">
+                <a href="index.html" class="flex items-center gap-2 px-4 py-2 text-sm text-white/40 hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    Voir le site
+                </a>
+                <button id="logout-btn" class="flex items-center gap-2 px-4 py-2 text-sm text-red-400/60 hover:text-red-400 transition-colors w-full text-left mt-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    Déconnexion
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 min-h-screen">
+            <!-- Top Bar -->
+            <header class="sticky top-0 z-30 bg-dark-900/90 backdrop-blur-xl border-b border-white/[0.06] px-8 py-4 flex items-center justify-between">
+                <h2 id="section-title" class="text-lg font-semibold text-white">Gestion des Actualités</h2>
+                <button id="add-btn" class="px-5 py-2 bg-gold-500 text-dark-900 text-sm font-semibold rounded-lg hover:bg-gold-400 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Ajouter
+                </button>
+            </header>
+
+            <!-- Content Area -->
+            <div class="p-8">
+
+                <!-- ===== NEWS SECTION ===== -->
+                <div id="section-news" class="admin-section">
+                    <div id="news-list" class="space-y-4">
+                        <div class="text-center py-12 text-white/30">
+                            <svg class="w-12 h-12 mx-auto mb-3 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+                            <p>Chargement des actualités...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== EVENTS SECTION ===== -->
+                <div id="section-events" class="admin-section hidden">
+                    <div id="events-list" class="space-y-4">
+                        <div class="text-center py-12 text-white/30">
+                            <p>Chargement des événements...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== PUBLICATIONS SECTION ===== -->
+                <div id="section-publications" class="admin-section hidden">
+                    <div id="publications-list" class="space-y-4">
+                        <div class="text-center py-12 text-white/30">
+                            <p>Chargement des publications...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== MODAL ========== -->
+    <div id="modal" class="fixed inset-0 z-[100] bg-dark-900/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-dark-800 border border-white/[0.08] rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-white/[0.06] flex items-center justify-between">
+                <h3 id="modal-title" class="text-lg font-semibold text-white">Ajouter</h3>
+                <button id="modal-close" class="w-8 h-8 bg-white/[0.05] rounded-lg flex items-center justify-center text-white/40 hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <form id="modal-form" class="p-6 space-y-5">
+                <!-- Dynamic form fields injected by JS -->
+                <div id="modal-fields"></div>
+                <div class="flex gap-3 pt-4">
+                    <button type="button" id="modal-cancel" class="flex-1 py-2.5 border border-white/[0.1] text-white/60 rounded-lg hover:bg-white/[0.03] transition-colors text-sm">Annuler</button>
+                    <button type="submit" class="flex-1 py-2.5 bg-royal-500 text-white rounded-lg hover:bg-royal-600 transition-colors text-sm font-medium">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== TOAST ========== -->
+    <div id="toast-container" class="fixed top-4 right-4 z-[200] space-y-2"></div>
+
+    <!-- ========== CONFIRM DIALOG ========== -->
+    <div id="confirm-dialog" class="fixed inset-0 z-[150] bg-dark-900/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-dark-800 border border-white/[0.08] rounded-2xl w-full max-w-sm p-6 text-center">
+            <div class="w-14 h-14 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Confirmer la suppression</h3>
+            <p class="text-white/40 text-sm mb-6">Cette action est irréversible.</p>
+            <div class="flex gap-3">
+                <button id="confirm-cancel" class="flex-1 py-2.5 border border-white/[0.1] text-white/60 rounded-lg hover:bg-white/[0.03] transition-colors text-sm">Annuler</button>
+                <button id="confirm-ok" class="flex-1 py-2.5 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dynamique Debout Congolais (DDC RDC) — Agir maintenant pour bâtir demain. Organisation de développement endogène en République Démocratique du Congo.">
+    <meta name="keywords" content="DDC RDC, Dynamique Debout Congolais, développement, Congo, RDC, jeunesse, leadership">
+    <meta name="theme-color" content="#0033A0">
+    <title>DDC RDC — Dynamique Debout Congolais</title>
+    <link rel="icon" type="image" href="img/favicon.ico">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        royal: { 50:'#e6ecf7',100:'#b3c4e6',200:'#809cd5',300:'#4d74c4',400:'#264db3',500:'#0033A0',600:'#002d8f',700:'#00237a',800:'#001a66',900:'#001040' },
+                        gold: { 50:'#fdf8e8',100:'#f9eab8',200:'#f5dc88',300:'#f1ce58',400:'#edc438',500:'#D4A017',600:'#b88a13',700:'#96700f',800:'#74570b',900:'#523d08' },
+                        dark: { 800:'#1a1a1a', 900:'#0d0d0d' }
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-dark-900 text-white font-body overflow-x-hidden">
+
+    <!-- ========== LOADER ========== -->
+    <div id="loader" class="fixed inset-0 z-[9999] bg-dark-900 flex items-center justify-center">
+        <div class="text-center">
+            <img src="img/DDClogo.png" alt="DDC" class="w-20 h-20 mx-auto mb-6 animate-pulse object-contain">
+            <div class="w-48 h-1 bg-royal-800 rounded-full overflow-hidden mx-auto">
+                <div id="loader-bar" class="h-full bg-gold-500 rounded-full" style="width:0%"></div>
+            </div>
+            <p class="text-white/20 text-xs mt-4 tracking-widest">CHARGEMENT</p>
+        </div>
+    </div>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#accueil" class="flex items-center gap-3 group flex-shrink-0">
+                    <img src="img/DDClogo.png" alt="DDC RDC" class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                    <div class="hidden sm:block">
+                        <span class="block text-base font-heading font-bold text-white leading-tight tracking-wide">DDC RDC</span>
+                        <span class="block text-[0.65rem] text-gold-400 tracking-[0.15em] font-medium">DYNAMIQUE DEBOUT CONGOLAIS</span>
+                    </div>
+                </a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="#accueil" class="nav-link px-4 py-2 text-[0.9rem] font-medium text-white/80 hover:text-gold-400 transition-colors relative">Accueil</a>
+                    <a href="#apropos" class="nav-link px-4 py-2 text-[0.9rem] font-medium text-white/80 hover:text-gold-400 transition-colors relative">À Propos</a>
+                    <a href="#programmes" class="nav-link px-4 py-2 text-[0.9rem] font-medium text-white/80 hover:text-gold-400 transition-colors relative">Programmes</a>
+                    <a href="#thinktank" class="nav-link px-4 py-2 text-[0.9rem] font-medium text-white/80 hover:text-gold-400 transition-colors relative">Think Tank</a>
+                    <a href="#actualites" class="nav-link px-4 py-2 text-[0.9rem] font-medium text-white/80 hover:text-gold-400 transition-colors relative">Actualités</a>
+                    <a href="#adhesion" class="btn-primary ml-4 px-6 py-2.5 bg-gold-500 text-dark-900 font-bold text-sm rounded-full hover:bg-gold-400 transition-all duration-300 hover:shadow-lg hover:shadow-gold-500/25">Rejoindre DDC</a>
+                </div>
+                <button id="mobile-menu-btn" class="lg:hidden relative w-12 h-12 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors" aria-label="Menu">
+                    <div class="space-y-1.5" id="hamburger">
+                        <span class="block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+                        <span class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
+                        <span class="block w-4 h-0.5 bg-gold-400 transition-all duration-300 origin-center"></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu — SOLID OPAQUE BACKGROUND -->
+        <div id="mobile-menu" class="lg:hidden fixed inset-0 top-0 z-40">
+            <div class="absolute inset-0 bg-dark-900"></div>
+            <div class="absolute inset-0 congolese-pattern opacity-[0.03]"></div>
+            <div class="h-20"></div>
+            <div class="relative flex flex-col items-center justify-center h-[calc(100%-5rem)] gap-8 pb-16">
+                <a href="#accueil" class="mobile-nav-link text-2xl sm:text-3xl font-heading font-bold text-white/90 hover:text-gold-400 transition-colors duration-300">Accueil</a>
+                <a href="#apropos" class="mobile-nav-link text-2xl sm:text-3xl font-heading font-bold text-white/90 hover:text-gold-400 transition-colors duration-300">À Propos</a>
+                <a href="#programmes" class="mobile-nav-link text-2xl sm:text-3xl font-heading font-bold text-white/90 hover:text-gold-400 transition-colors duration-300">Programmes</a>
+                <a href="#thinktank" class="mobile-nav-link text-2xl sm:text-3xl font-heading font-bold text-white/90 hover:text-gold-400 transition-colors duration-300">Think Tank</a>
+                <a href="#actualites" class="mobile-nav-link text-2xl sm:text-3xl font-heading font-bold text-white/90 hover:text-gold-400 transition-colors duration-300">Actualités</a>
+                <a href="#adhesion" class="mt-6 px-10 py-4 bg-gold-500 text-dark-900 font-bold text-base rounded-full hover:bg-gold-400 transition-all">Rejoindre DDC</a>
+                <div class="mt-auto"><div class="congolese-border w-40 mx-auto mb-4"></div><p class="text-white/20 text-xs tracking-widest">DDC RDC</p></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO — Background Slideshow ========== -->
+    <section id="accueil" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="hero-slideshow">
+            <div class="hero-slide active" data-slide="0"><img src="img/Juillet 2025/OFS_4237.JPG.jpg" alt="Conférence DDC RDC"></div>
+            <div class="hero-slide" data-slide="1"><img src="img/25-nov-2025/P77A9080.JPG" alt="Assemblée DDC"></div>
+            <div class="hero-slide" data-slide="2"><img src="img/sept-2025/P77A4745.jpg" alt="Jeunesse congolaise"></div>
+            <div class="hero-slide" data-slide="3"><img src="img/atelier-5-dec/_TOR6216.JPG" alt="Atelier DDC"></div>
+            <div class="hero-slide" data-slide="4"><img src="img/sept-oct-2024/Septembre - Octobre 2024/DDC Salongo (13).jpg" alt="Salongo communautaire"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="absolute inset-0 congolese-pattern opacity-[0.04] z-[2]"></div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-[2]">
+            <div class="hero-shape absolute top-[15%] left-[5%] w-48 h-48 md:w-72 md:h-72 border border-gold-500/10 rounded-full"></div>
+            <div class="hero-shape absolute bottom-[10%] right-[5%] w-64 h-64 md:w-96 md:h-96 border border-royal-400/10 rounded-full"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
+            <div id="hero-badge" class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-gold-500/30 bg-gold-500/10 backdrop-blur-sm mb-8 opacity-0">
+                <span class="w-2 h-2 rounded-full bg-gold-400 animate-pulse"></span>
+                <span class="text-gold-300 text-xs sm:text-sm font-semibold tracking-[0.15em]">DYNAMIQUE DEBOUT CONGOLAIS</span>
+            </div>
+            <h1 id="hero-title" class="mb-6 opacity-0">
+                <span class="block text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] font-heading font-black text-white leading-[1.05] tracking-tight">
+                    <span class="word-reveal"><span>Agir</span></span> <span class="word-reveal"><span>maintenant</span></span>
+                </span>
+                <span class="block text-[2.5rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] font-heading font-black leading-[1.05] tracking-tight mt-2">
+                    <span class="word-reveal"><span>pour</span></span> <span class="word-reveal"><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-400">bâtir</span></span> <span class="word-reveal"><span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-gold-500 to-gold-300">demain</span></span>
+                </span>
+            </h1>
+            <p id="hero-subtitle" class="mt-6 text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto leading-relaxed font-light opacity-0">
+                Une école où la jeunesse congolaise apprend, innove et crée de la valeur locale pour un développement endogène durable.
+            </p>
+            <div id="hero-cta" class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0">
+                <a href="#programmes" class="btn-primary group px-8 py-4 bg-gold-500 text-dark-900 font-bold rounded-full hover:bg-gold-400 transition-all duration-300 hover:shadow-xl hover:shadow-gold-500/30 flex items-center gap-2 text-sm sm:text-base">
+                    Découvrir nos Programmes
+                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+                <a href="#adhesion" class="px-8 py-4 border-2 border-white/25 text-white font-semibold rounded-full hover:bg-white/10 hover:border-gold-500/50 transition-all duration-300 text-sm sm:text-base">
+                    Rejoindre le mouvement
+                </a>
+            </div>
+            <div id="hero-stats" class="mt-14 sm:mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-3xl mx-auto opacity-0">
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
+                    <div class="stat-value text-2xl sm:text-3xl md:text-4xl font-heading font-black text-gold-400" data-count="6">0</div>
+                    <div class="text-[0.65rem] sm:text-xs text-white/40 mt-1 tracking-wider font-medium">PROGRAMMES</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
+                    <div class="stat-value text-2xl sm:text-3xl md:text-4xl font-heading font-black text-gold-400" data-count="500">0</div>
+                    <div class="text-[0.65rem] sm:text-xs text-white/40 mt-1 tracking-wider font-medium">MEMBRES+</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
+                    <div class="stat-value text-2xl sm:text-3xl md:text-4xl font-heading font-black text-gold-400" data-count="4">0</div>
+                    <div class="text-[0.65rem] sm:text-xs text-white/40 mt-1 tracking-wider font-medium">PILIERS</div>
+                </div>
+                <div class="text-center p-3 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
+                    <div class="stat-value text-2xl sm:text-3xl md:text-4xl font-heading font-black text-gold-400" data-count="2024">0</div>
+                    <div class="text-[0.65rem] sm:text-xs text-white/40 mt-1 tracking-wider font-medium">DEPUIS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-dots" id="slide-dots">
+            <button class="slide-dot active" data-slide="0" aria-label="Image 1"></button>
+            <button class="slide-dot" data-slide="1" aria-label="Image 2"></button>
+            <button class="slide-dot" data-slide="2" aria-label="Image 3"></button>
+            <button class="slide-dot" data-slide="3" aria-label="Image 4"></button>
+            <button class="slide-dot" data-slide="4" aria-label="Image 5"></button>
+        </div>
+
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 z-10" id="scroll-indicator">
+            <span class="text-[0.6rem] text-white/30 tracking-[0.2em]">DÉFILER</span>
+            <div class="w-5 h-8 border border-white/20 rounded-full flex justify-center pt-1.5"><div class="w-1 h-2 bg-gold-400 rounded-full animate-bounce"></div></div>
+        </div>
+    </section>
+
+    <div class="congolese-border"></div>
+
+    <!-- ========== À PROPOS ========== -->
+    <section id="apropos" class="relative py-20 lg:py-28 overflow-hidden">
+        <div class="section-bg-photo"><img src="img/Juillet 2025/OFS_4268.JPG.jpg" alt="" aria-hidden="true"></div>
+        <div class="absolute inset-0 congolese-pattern-2 opacity-[0.03]"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-up">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-gold-400 border border-gold-500/20 rounded-full mb-6">QUI SOMMES-NOUS</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-white mb-4">Une Vision pour le <span class="text-gold-400">Congo</span></h2>
+                <div class="congolese-border w-32 mx-auto mt-4"></div>
+            </div>
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <div class="relative reveal-left">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3]">
+                        <img src="img/sept-2025/P77A4713.jpg" alt="Activités DDC RDC" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 sm:bottom-4 sm:right-4 w-2/5 rounded-xl overflow-hidden border-4 border-dark-900 shadow-2xl hidden sm:block">
+                        <img src="img/Juillet 2025/OFS_4245.JPG.jpg" alt="Communauté DDC" class="w-full aspect-square object-cover">
+                    </div>
+                    <div class="absolute -top-4 -left-4 sm:top-4 sm:left-4 bg-royal-500 p-4 sm:p-5 rounded-2xl shadow-2xl">
+                        <div class="text-2xl sm:text-3xl font-heading font-black text-gold-400">DDC</div>
+                        <div class="text-[0.65rem] sm:text-xs text-white/80 mt-0.5 font-medium">Développement Endogène</div>
+                    </div>
+                    <div class="absolute -bottom-3 -left-3 w-16 h-16 border-l-2 border-b-2 border-gold-500/30 rounded-bl-2xl"></div>
+                </div>
+                <div class="space-y-6 reveal-right">
+                    <div>
+                        <h3 class="text-xl sm:text-2xl font-heading font-bold text-white mb-3">Notre Mission</h3>
+                        <p class="text-white/60 leading-relaxed text-base sm:text-lg">La DDC RDC est une école où la jeunesse congolaise apprend, innove et crée de la valeur locale. Nous croyons au développement endogène — un Congo bâti par les Congolais, pour les Congolais.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div class="group p-4 sm:p-5 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-gold-500/30 transition-all duration-300 hover:bg-gold-500/5">
+                            <div class="w-10 h-10 rounded-lg bg-royal-500/20 flex items-center justify-center mb-3 group-hover:bg-royal-500/30 transition-colors"><svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
+                            <h4 class="font-bold text-white text-sm mb-1">Éveil Économique</h4>
+                            <p class="text-white/40 text-xs leading-relaxed">Former des entrepreneurs et créer de la valeur locale</p>
+                        </div>
+                        <div class="group p-4 sm:p-5 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-gold-500/30 transition-all duration-300 hover:bg-gold-500/5">
+                            <div class="w-10 h-10 rounded-lg bg-royal-500/20 flex items-center justify-center mb-3 group-hover:bg-royal-500/30 transition-colors"><svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg></div>
+                            <h4 class="font-bold text-white text-sm mb-1">Leadership Citoyen</h4>
+                            <p class="text-white/40 text-xs leading-relaxed">Bâtir des leaders responsables et engagés</p>
+                        </div>
+                        <div class="group p-4 sm:p-5 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-gold-500/30 transition-all duration-300 hover:bg-gold-500/5">
+                            <div class="w-10 h-10 rounded-lg bg-royal-500/20 flex items-center justify-center mb-3 group-hover:bg-royal-500/30 transition-colors"><svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg></div>
+                            <h4 class="font-bold text-white text-sm mb-1">Inclusion du Genre</h4>
+                            <p class="text-white/40 text-xs leading-relaxed">Promouvoir l'égalité et la participation de tous</p>
+                        </div>
+                        <div class="group p-4 sm:p-5 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-gold-500/30 transition-all duration-300 hover:bg-gold-500/5">
+                            <div class="w-10 h-10 rounded-lg bg-royal-500/20 flex items-center justify-center mb-3 group-hover:bg-royal-500/30 transition-colors"><svg class="w-5 h-5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg></div>
+                            <h4 class="font-bold text-white text-sm mb-1">Environnement</h4>
+                            <p class="text-white/40 text-xs leading-relaxed">Protéger notre terre et bâtir un avenir vert</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROGRAMMES ========== -->
+    <section id="programmes" class="relative py-20 lg:py-28 bg-gradient-to-b from-dark-900 via-royal-900/20 to-dark-900">
+        <div class="absolute inset-0 congolese-pattern opacity-[0.02]"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-up">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-gold-400 border border-gold-500/20 rounded-full mb-6">NOS INITIATIVES</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-white mb-4">Programmes <span class="text-gold-400">Phares</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto text-sm sm:text-base">Six programmes structurants pour transformer la jeunesse congolaise en acteurs du développement durable.</p>
+                <div class="congolese-border w-24 mx-auto mt-6"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+                <!-- CLAC -->
+                <div class="program-card group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-royal-500/40 transition-all duration-500 reveal-up">
+                    <div class="h-2 bg-gradient-to-r from-royal-500 to-royal-300"></div>
+                    <div class="relative p-6 sm:p-8"><div class="absolute inset-0 bg-gradient-to-br from-royal-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="relative">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-royal-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"><svg class="w-6 h-6 sm:w-7 sm:h-7 text-royal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg></div>
+                        <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">CLAC</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Club de Lecture et d'Action Citoyenne — Éveiller la conscience citoyenne à travers la lecture et le débat.</p>
+                        <div class="flex items-center gap-2 text-gold-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>En savoir plus</span><svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+                    </div></div>
+                </div>
+                <!-- PROJEC -->
+                <div class="program-card group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-gold-500/40 transition-all duration-500 reveal-up">
+                    <div class="h-2 bg-gradient-to-r from-gold-500 to-gold-300"></div>
+                    <div class="relative p-6 sm:p-8"><div class="absolute inset-0 bg-gradient-to-br from-gold-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="relative">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gold-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"><svg class="w-6 h-6 sm:w-7 sm:h-7 text-gold-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg></div>
+                        <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">PROJEC</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Programme de Renforcement des Opportunités pour les Jeunes Entrepreneurs Congolais.</p>
+                        <div class="flex items-center gap-2 text-gold-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>En savoir plus</span><svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+                    </div></div>
+                </div>
+                <!-- Programme Vert -->
+                <div class="program-card group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-emerald-500/40 transition-all duration-500 reveal-up">
+                    <div class="h-2 bg-gradient-to-r from-emerald-500 to-emerald-300"></div>
+                    <div class="relative p-6 sm:p-8"><div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="relative">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"><svg class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg></div>
+                        <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">Programme Vert</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Sensibilisation, reboisement et promotion d'un développement durable au Congo.</p>
+                        <div class="flex items-center gap-2 text-gold-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>En savoir plus</span><svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+                    </div></div>
+                </div>
+                <!-- JASIRI -->
+                <div class="program-card group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-red-500/40 transition-all duration-500 reveal-up">
+                    <div class="h-2 bg-gradient-to-r from-red-500 to-red-300"></div>
+                    <div class="relative p-6 sm:p-8"><div class="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="relative">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-red-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"><svg class="w-6 h-6 sm:w-7 sm:h-7 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg></div>
+                        <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">JASIRI</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Jeunesse Active et Solidaire pour la Résilience et l'Innovation.</p>
+                        <div class="flex items-center gap-2 text-gold-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>En savoir plus</span><svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+                    </div></div>
+                </div>
+                <!-- Culture Africaine -->
+                <div class="program-card group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-amber-500/40 transition-all duration-500 reveal-up">
+                    <div class="h-2 bg-gradient-to-r from-amber-500 to-amber-300"></div>
+                    <div class="relative p-6 sm:p-8"><div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="relative">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"><svg class="w-6 h-6 sm:w-7 sm:h-7 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg></div>
+                        <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">Culture Africaine</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Art, musique, traditions et identité congolaise au service du développement.</p>
+                        <div class="flex items-center gap-2 text-gold-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>En savoir plus</span><svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+                    </div></div>
+                </div>
+                <!-- Creative Child -->
+                <div class="program-card group relative bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-violet-500/40 transition-all duration-500 reveal-up">
+                    <div class="h-2 bg-gradient-to-r from-violet-500 to-violet-300"></div>
+                    <div class="relative p-6 sm:p-8"><div class="absolute inset-0 bg-gradient-to-br from-violet-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div><div class="relative">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-violet-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"><svg class="w-6 h-6 sm:w-7 sm:h-7 text-violet-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg></div>
+                        <h3 class="text-lg sm:text-xl font-heading font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">Creative Child</h3>
+                        <p class="text-white/50 text-sm leading-relaxed mb-4">Ateliers, mentorat et espaces de créativité pour la prochaine génération congolaise.</p>
+                        <div class="flex items-center gap-2 text-gold-400 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span>En savoir plus</span><svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></div>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== THINK TANK ========== -->
+    <section id="thinktank" class="relative py-20 lg:py-28">
+        <div class="section-bg-photo"><img src="img/25-nov-2025/P77A9074.JPG" alt="" aria-hidden="true"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-up">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-gold-400 border border-gold-500/20 rounded-full mb-6">THINK TANK</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-white mb-4">Publications & <span class="text-gold-400">Réflexions</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto text-sm sm:text-base">Analyses stratégiques et contributions intellectuelles pour le développement endogène du Congo.</p>
+                <div class="congolese-border w-24 mx-auto mt-6"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <article class="group reveal-up"><div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 sm:p-8 h-full hover:border-royal-500/30 transition-all duration-500 hover:bg-white/[0.06]">
+                    <div class="flex items-center gap-3 mb-5"><span class="px-3 py-1 text-[0.6rem] font-bold tracking-wider text-royal-300 bg-royal-500/20 rounded-full">RAPPORT</span><span class="text-white/30 text-xs">2025</span></div>
+                    <h3 class="text-base sm:text-lg font-heading font-bold text-white mb-3 group-hover:text-gold-400 transition-colors leading-snug">Vision 2030 : Stratégie de développement endogène pour la RDC</h3>
+                    <p class="text-white/40 text-sm leading-relaxed mb-5">Feuille de route pour transformer l'économie congolaise par l'innovation locale.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/[0.06]"><span class="text-xs text-white/30">12 pages</span><a href="#" class="text-gold-400 text-sm font-medium hover:text-gold-300 transition-colors flex items-center gap-1">Lire <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a></div>
+                </div></article>
+                <article class="group reveal-up"><div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 sm:p-8 h-full hover:border-royal-500/30 transition-all duration-500 hover:bg-white/[0.06]">
+                    <div class="flex items-center gap-3 mb-5"><span class="px-3 py-1 text-[0.6rem] font-bold tracking-wider text-gold-400 bg-gold-500/20 rounded-full">ANALYSE</span><span class="text-white/30 text-xs">2025</span></div>
+                    <h3 class="text-base sm:text-lg font-heading font-bold text-white mb-3 group-hover:text-gold-400 transition-colors leading-snug">L'entrepreneuriat jeune en RDC : Défis et opportunités</h3>
+                    <p class="text-white/40 text-sm leading-relaxed mb-5">Étude sur l'écosystème entrepreneurial congolais et leviers d'accélération.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/[0.06]"><span class="text-xs text-white/30">8 pages</span><a href="#" class="text-gold-400 text-sm font-medium hover:text-gold-300 transition-colors flex items-center gap-1">Lire <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a></div>
+                </div></article>
+                <article class="group reveal-up"><div class="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-6 sm:p-8 h-full hover:border-royal-500/30 transition-all duration-500 hover:bg-white/[0.06]">
+                    <div class="flex items-center gap-3 mb-5"><span class="px-3 py-1 text-[0.6rem] font-bold tracking-wider text-emerald-400 bg-emerald-500/20 rounded-full">TRIBUNE</span><span class="text-white/30 text-xs">2024</span></div>
+                    <h3 class="text-base sm:text-lg font-heading font-bold text-white mb-3 group-hover:text-gold-400 transition-colors leading-snug">Pour une éducation citoyenne au service du Congo</h3>
+                    <p class="text-white/40 text-sm leading-relaxed mb-5">Plaidoyer pour une réforme éducative centrée sur les valeurs citoyennes.</p>
+                    <div class="flex items-center justify-between pt-4 border-t border-white/[0.06]"><span class="text-xs text-white/30">6 pages</span><a href="#" class="text-gold-400 text-sm font-medium hover:text-gold-300 transition-colors flex items-center gap-1">Lire <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg></a></div>
+                </div></article>
+            </div>
+            <div id="publications-dynamic" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"></div>
+        </div>
+    </section>
+
+    <!-- ========== ACTUALITÉS ========== -->
+    <section id="actualites" class="relative py-20 lg:py-28 bg-gradient-to-b from-dark-900 via-royal-900/10 to-dark-900">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-up">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-gold-400 border border-gold-500/20 rounded-full mb-6">ACTUALITÉS</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-white mb-4">Nos <span class="text-gold-400">Événements</span></h2>
+                <p class="text-white/50 max-w-2xl mx-auto text-sm sm:text-base">Revivez les moments forts à travers nos conférences, ateliers et activités communautaires.</p>
+                <div class="congolese-border w-24 mx-auto mt-6"></div>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3 mb-10 reveal-up">
+                <button class="event-filter active px-5 py-2 text-sm font-medium rounded-full border border-white/10 text-white/70 hover:text-gold-400 hover:border-gold-500/30 transition-all" data-filter="all">Tous</button>
+                <button class="event-filter px-5 py-2 text-sm font-medium rounded-full border border-white/10 text-white/70 hover:text-gold-400 hover:border-gold-500/30 transition-all" data-filter="2025">2025</button>
+                <button class="event-filter px-5 py-2 text-sm font-medium rounded-full border border-white/10 text-white/70 hover:text-gold-400 hover:border-gold-500/30 transition-all" data-filter="2024">2024</button>
+            </div>
+            <div id="events-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <div class="event-card group relative rounded-2xl overflow-hidden reveal-up" data-year="2025"><div class="aspect-[4/3] overflow-hidden"><img src="img/25-nov-2025/P77A9080.JPG" alt="Novembre 2025" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy"></div><div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div><div class="absolute bottom-0 left-0 right-0 p-5"><span class="inline-block px-3 py-1 text-[0.6rem] font-bold tracking-wider text-gold-400 bg-gold-500/20 backdrop-blur-sm rounded-full mb-2">NOVEMBRE 2025</span><h3 class="text-base sm:text-lg font-heading font-bold text-white mb-1">Conférence DDC — Vision Stratégique</h3><p class="text-white/50 text-xs sm:text-sm">Réflexion stratégique sur le développement endogène.</p></div></div>
+                <div class="event-card group relative rounded-2xl overflow-hidden reveal-up" data-year="2025"><div class="aspect-[4/3] overflow-hidden"><img src="img/25-nov-2025/P77A9097.JPG" alt="Novembre 2025" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy"></div><div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div><div class="absolute bottom-0 left-0 right-0 p-5"><span class="inline-block px-3 py-1 text-[0.6rem] font-bold tracking-wider text-gold-400 bg-gold-500/20 backdrop-blur-sm rounded-full mb-2">NOVEMBRE 2025</span><h3 class="text-base sm:text-lg font-heading font-bold text-white mb-1">Atelier de Leadership</h3><p class="text-white/50 text-xs sm:text-sm">Renforcement des capacités de leadership citoyen.</p></div></div>
+                <div class="event-card group relative rounded-2xl overflow-hidden reveal-up" data-year="2025"><div class="aspect-[4/3] overflow-hidden"><img src="img/sept-2025/P77A4745.jpg" alt="Septembre 2025" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy"></div><div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div><div class="absolute bottom-0 left-0 right-0 p-5"><span class="inline-block px-3 py-1 text-[0.6rem] font-bold tracking-wider text-royal-300 bg-royal-500/20 backdrop-blur-sm rounded-full mb-2">SEPTEMBRE 2025</span><h3 class="text-base sm:text-lg font-heading font-bold text-white mb-1">Forum de la Jeunesse</h3><p class="text-white/50 text-xs sm:text-sm">Échange entre jeunes leaders congolais.</p></div></div>
+                <div class="event-card group relative rounded-2xl overflow-hidden reveal-up" data-year="2025"><div class="aspect-[4/3] overflow-hidden"><img src="img/Juillet 2025/OFS_4237.JPG.jpg" alt="Juillet 2025" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy"></div><div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div><div class="absolute bottom-0 left-0 right-0 p-5"><span class="inline-block px-3 py-1 text-[0.6rem] font-bold tracking-wider text-royal-300 bg-royal-500/20 backdrop-blur-sm rounded-full mb-2">JUILLET 2025</span><h3 class="text-base sm:text-lg font-heading font-bold text-white mb-1">Grande Conférence DDC</h3><p class="text-white/50 text-xs sm:text-sm">Panels sur l'avenir du Congo.</p></div></div>
+                <div class="event-card group relative rounded-2xl overflow-hidden reveal-up" data-year="2025"><div class="aspect-[4/3] overflow-hidden"><img src="img/atelier-5-dec/_TOR6216.JPG" alt="Décembre 2025" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy"></div><div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div><div class="absolute bottom-0 left-0 right-0 p-5"><span class="inline-block px-3 py-1 text-[0.6rem] font-bold tracking-wider text-gold-400 bg-gold-500/20 backdrop-blur-sm rounded-full mb-2">DÉCEMBRE 2025</span><h3 class="text-base sm:text-lg font-heading font-bold text-white mb-1">Atelier de Formation</h3><p class="text-white/50 text-xs sm:text-sm">Formation intensive pour les cadres DDC.</p></div></div>
+                <div class="event-card group relative rounded-2xl overflow-hidden reveal-up" data-year="2024"><div class="aspect-[4/3] overflow-hidden"><img src="img/sept-oct-2024/Septembre - Octobre 2024/DDC Salongo (13).jpg" alt="Salongo 2024" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy"></div><div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/40 to-transparent"></div><div class="absolute bottom-0 left-0 right-0 p-5"><span class="inline-block px-3 py-1 text-[0.6rem] font-bold tracking-wider text-emerald-400 bg-emerald-500/20 backdrop-blur-sm rounded-full mb-2">SEPT-OCT 2024</span><h3 class="text-base sm:text-lg font-heading font-bold text-white mb-1">DDC Salongo — Action Communautaire</h3><p class="text-white/50 text-xs sm:text-sm">Travaux communautaires et sensibilisation.</p></div></div>
+            </div>
+            <div id="news-dynamic" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-6"></div>
+            <div id="lightbox" class="fixed inset-0 z-[9998] bg-dark-900/95 backdrop-blur-xl hidden items-center justify-center p-4">
+                <button id="lightbox-close" class="absolute top-6 right-6 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+                <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== GALERIE ========== -->
+    <section class="relative py-14 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 reveal-up"><h3 class="text-xl sm:text-2xl font-heading font-bold text-white text-center">Galerie <span class="text-gold-400">Photos</span></h3></div>
+        <div class="gallery-scroll flex gap-4 overflow-hidden"><div class="gallery-track flex gap-4 animate-scroll">
+            <img src="img/25-nov-2025/P77A8979.JPG" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/25-nov-2025/P77A8986.JPG" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/sept-2025/P77A4617.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/sept-2025/P77A4619.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/Juillet 2025/OFS_4213.JPG.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/Juillet 2025/OFS_4218.JPG.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/atelier-5-dec/_TOR6194.JPG" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/atelier-5-dec/_TOR6211.JPG" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/sept-2025/P77A4637.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/Juillet 2025/OFS_4255.JPG.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/25-nov-2025/P77A9010.JPG" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/sept-oct-2024/Septembre - Octobre 2024/DDC Salongo (3).jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/25-nov-2025/P77A8979.JPG" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/25-nov-2025/P77A8986.JPG" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/sept-2025/P77A4617.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/sept-2025/P77A4619.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/Juillet 2025/OFS_4213.JPG.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+            <img src="img/Juillet 2025/OFS_4218.JPG.jpg" alt="DDC" class="gallery-img h-40 sm:h-56 w-auto rounded-xl object-cover cursor-pointer hover:opacity-80 transition-opacity" loading="lazy">
+        </div></div>
+    </section>
+
+    <!-- ========== ADHÉSION ========== -->
+    <section id="adhesion" class="relative py-20 lg:py-28 bg-gradient-to-b from-dark-900 via-royal-900/20 to-dark-900">
+        <div class="absolute inset-0 congolese-pattern-2 opacity-[0.02]"></div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-up">
+                <span class="inline-block px-4 py-1.5 text-xs font-semibold tracking-[0.2em] text-gold-400 border border-gold-500/20 rounded-full mb-6">REJOIGNEZ-NOUS</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-white mb-4">Formulaire d'<span class="text-gold-400">Adhésion</span></h2>
+                <p class="text-white/50 max-w-xl mx-auto text-sm sm:text-base">Devenez membre et participez au développement de notre nation.</p>
+                <div class="congolese-border w-24 mx-auto mt-6"></div>
+            </div>
+            <div class="reveal-up">
+                <form id="adhesion-form" class="bg-white/[0.04] border border-white/[0.06] rounded-3xl p-6 sm:p-10">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div class="form-group"><label class="block text-sm font-medium text-white/70 mb-2">Nom complet *</label><input type="text" name="entry.YOUR_NAME_ENTRY_ID" required class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/25 transition-all" placeholder="Votre nom complet"></div>
+                        <div class="form-group"><label class="block text-sm font-medium text-white/70 mb-2">Email *</label><input type="email" name="entry.YOUR_EMAIL_ENTRY_ID" required class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/25 transition-all" placeholder="votre@email.com"></div>
+                        <div class="form-group"><label class="block text-sm font-medium text-white/70 mb-2">Téléphone *</label><input type="tel" name="entry.YOUR_PHONE_ENTRY_ID" required class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/25 transition-all" placeholder="+243 ..."></div>
+                        <div class="form-group"><label class="block text-sm font-medium text-white/70 mb-2">Ville *</label><input type="text" name="entry.YOUR_CITY_ENTRY_ID" required class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/25 transition-all" placeholder="Kinshasa, Lubumbashi..."></div>
+                        <div class="form-group"><label class="block text-sm font-medium text-white/70 mb-2">Profession</label><input type="text" name="entry.YOUR_PROFESSION_ENTRY_ID" class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/25 transition-all" placeholder="Étudiant, Ingénieur..."></div>
+                        <div class="form-group"><label class="block text-sm font-medium text-white/70 mb-2">Programme</label><select name="entry.YOUR_PROGRAM_ENTRY_ID" class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/25 transition-all appearance-none cursor-pointer"><option value="" class="bg-dark-900">Choisir...</option><option value="CLAC" class="bg-dark-900">CLAC</option><option value="PROJEC" class="bg-dark-900">PROJEC</option><option value="Programme Vert" class="bg-dark-900">Programme Vert</option><option value="JASIRI" class="bg-dark-900">JASIRI</option><option value="Culture Africaine" class="bg-dark-900">Culture Africaine</option><option value="Creative Child" class="bg-dark-900">Creative Child</option></select></div>
+                    </div>
+                    <div class="form-group mt-5"><label class="block text-sm font-medium text-white/70 mb-2">Motivation</label><textarea name="entry.YOUR_MOTIVATION_ENTRY_ID" rows="4" class="w-full px-4 py-3 bg-white/[0.05] border border-white/[0.1] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/25 transition-all resize-none" placeholder="Pourquoi rejoindre la DDC RDC ?"></textarea></div>
+                    <div class="mt-8 text-center">
+                        <button type="submit" id="submit-btn" class="btn-primary group relative inline-flex items-center gap-3 px-10 py-4 bg-gold-500 text-dark-900 font-bold rounded-full hover:bg-gold-400 transition-all duration-300 hover:shadow-xl hover:shadow-gold-500/25 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span id="submit-text">Envoyer ma candidature</span>
+                            <svg id="submit-arrow" class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            <svg id="submit-spinner" class="hidden w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        </button>
+                    </div>
+                    <div id="form-success" class="hidden mt-8 p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-center"><div class="w-14 h-14 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3"><svg class="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div><h3 class="text-lg font-heading font-bold text-white mb-1">Candidature envoyée !</h3><p class="text-white/60 text-sm">L'équipe DDC RDC vous contactera prochainement.</p></div>
+                    <div id="form-error" class="hidden mt-8 p-6 bg-red-500/10 border border-red-500/20 rounded-2xl text-center"><div class="w-14 h-14 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-3"><svg class="w-7 h-7 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h3 class="text-lg font-heading font-bold text-white mb-1">Erreur d'envoi</h3><p class="text-white/60 text-sm">Veuillez réessayer.</p></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="relative py-14 border-t border-white/[0.06]">
+        <div class="absolute inset-0 congolese-pattern opacity-[0.02]"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-5"><img src="img/DDClogo.png" alt="DDC" class="h-12 w-auto object-contain"><div><span class="block text-lg font-heading font-bold text-white">DDC RDC</span><span class="block text-[0.65rem] text-gold-400 tracking-[0.15em]">DYNAMIQUE DEBOUT CONGOLAIS</span></div></div>
+                    <p class="text-white/40 text-sm leading-relaxed max-w-md mb-5">La DDC RDC est une école où la jeunesse congolaise apprend, innove et crée de la valeur locale pour un Congo debout et prospère.</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-10 h-10 bg-white/[0.05] border border-white/[0.1] rounded-lg flex items-center justify-center text-white/50 hover:text-gold-400 hover:border-gold-500/30 transition-all" aria-label="Facebook"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                        <a href="#" class="w-10 h-10 bg-white/[0.05] border border-white/[0.1] rounded-lg flex items-center justify-center text-white/50 hover:text-gold-400 hover:border-gold-500/30 transition-all" aria-label="X"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="#" class="w-10 h-10 bg-white/[0.05] border border-white/[0.1] rounded-lg flex items-center justify-center text-white/50 hover:text-gold-400 hover:border-gold-500/30 transition-all" aria-label="Instagram"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                        <a href="#" class="w-10 h-10 bg-white/[0.05] border border-white/[0.1] rounded-lg flex items-center justify-center text-white/50 hover:text-gold-400 hover:border-gold-500/30 transition-all" aria-label="LinkedIn"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    </div>
+                </div>
+                <div><h4 class="text-sm font-semibold text-white tracking-wider mb-5">NAVIGATION</h4><ul class="space-y-2.5"><li><a href="#accueil" class="text-white/40 text-sm hover:text-gold-400 transition-colors">Accueil</a></li><li><a href="#apropos" class="text-white/40 text-sm hover:text-gold-400 transition-colors">À Propos</a></li><li><a href="#programmes" class="text-white/40 text-sm hover:text-gold-400 transition-colors">Programmes</a></li><li><a href="#thinktank" class="text-white/40 text-sm hover:text-gold-400 transition-colors">Think Tank</a></li><li><a href="#actualites" class="text-white/40 text-sm hover:text-gold-400 transition-colors">Actualités</a></li><li><a href="#adhesion" class="text-white/40 text-sm hover:text-gold-400 transition-colors">Adhésion</a></li></ul></div>
+                <div><h4 class="text-sm font-semibold text-white tracking-wider mb-5">CONTACT</h4><ul class="space-y-3"><li class="flex items-start gap-3"><svg class="w-4 h-4 text-gold-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span class="text-white/40 text-sm">Kinshasa, RDC</span></li><li class="flex items-start gap-3"><svg class="w-4 h-4 text-gold-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg><span class="text-white/40 text-sm">contact@ddcrdc.org</span></li></ul></div>
+            </div>
+            <div class="mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3"><p class="text-white/30 text-xs">&copy; 2024-2025 Dynamique Debout Congolais.</p><p class="text-white/20 text-xs italic font-heading">Agir maintenant pour bâtir demain.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
