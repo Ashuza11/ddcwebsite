@@ -23,7 +23,7 @@
      * 5. The base URL before "?..." is your GOOGLE_FORM_ACTION_URL
      *    (change "viewform" to "formResponse")
      */
-    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID_HERE/formResponse';
+    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScubQ4erVuDw9H9870ELoCxDoGqv46STaX1U0fvZOBiU9gZLg/formResponse';
 
     /**
      * CLOUDFLARE WORKER API URL
@@ -70,22 +70,15 @@
         const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
         heroTl
-            .to('#hero-logo', {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 1,
-                from: { y: -40, scale: 0.8 }
-            })
             .to('#hero-badge', {
                 opacity: 1,
                 y: 0,
                 duration: 0.7,
-            }, '-=0.5')
+            })
             .to('#hero-title', {
                 opacity: 1,
                 y: 0,
-                duration: 0.9,
+                duration: 0.8,
             }, '-=0.4')
             .to('#hero-subtitle', {
                 opacity: 1,
@@ -554,6 +547,89 @@
             }
         });
     });
+
+
+    // =========================================
+    // HERO SLIDESHOW AUTO-ADVANCE
+    // =========================================
+
+    (function initSlideshow() {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slide-dot');
+        if (!slides.length) return;
+
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        const interval = 6000; // 6 seconds per slide
+        let timer;
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide((currentSlide + 1) % totalSlides);
+        }
+
+        function startTimer() {
+            timer = setInterval(nextSlide, interval);
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            startTimer();
+        }
+
+        // Click on dots to navigate
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const idx = parseInt(dot.dataset.slide);
+                if (idx !== currentSlide) {
+                    goToSlide(idx);
+                    resetTimer();
+                }
+            });
+        });
+
+        startTimer();
+    })();
+
+
+    // =========================================
+    // THEME TOGGLE (Light / Dark Mode)
+    // =========================================
+
+    (function initThemeToggle() {
+        const html = document.documentElement;
+        const toggleDesktop = document.getElementById('theme-toggle-desktop');
+        const toggleMobile = document.getElementById('theme-toggle-mobile');
+
+        // Check saved preference or default to dark
+        const savedTheme = localStorage.getItem('ddc-theme');
+        if (savedTheme === 'light') {
+            html.classList.remove('dark');
+        } else {
+            html.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            const isDark = html.classList.contains('dark');
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('ddc-theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('ddc-theme', 'dark');
+            }
+        }
+
+        if (toggleDesktop) toggleDesktop.addEventListener('click', toggleTheme);
+        if (toggleMobile) toggleMobile.addEventListener('click', toggleTheme);
+    })();
 
 
     // =========================================
